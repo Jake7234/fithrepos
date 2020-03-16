@@ -86,7 +86,8 @@ namespace BankingApp
             }
             else
             // Handle insufficient fund
-                if (amountTransfer > fromBalance)
+                if (((fromRadioButtonChecked == "ChequeRadioButtonOn") && (amountTransfer + 2.0m > fromBalance)) ||
+                    ((fromRadioButtonChecked == "SavingRadioButtonOn") && (amountTransfer > fromBalance)))
                 {
                     MessageBox.Show("Error! You have insufficient fund. Enter another amount");
                     Keyboard.Focus(amountTextBox);
@@ -133,7 +134,7 @@ namespace BankingApp
                             break;
 
                         case "ChequeRadioButtonOn&SavingsRadioButtonOn":  // from Cheque to Savings
-                            fromBalance = fromBalance - amountTransfer;
+                            fromBalance = fromBalance - amountTransfer - 2.0m;
                             cChequeBalance = fromBalance;
                             fromBalanceLabel.Content = cChequeBalance.ToString("C");
 
@@ -143,7 +144,7 @@ namespace BankingApp
                             break;
 
                         case "ChequeRadioButtonOn&InvestmentRadioButtonOn":   // from Cheque to Investment
-                            fromBalance = fromBalance - amountTransfer;
+                            fromBalance = fromBalance - amountTransfer - 2.0m;
                             cChequeBalance = fromBalance;
                             fromBalanceLabel.Content = cChequeBalance.ToString("C");
 
@@ -213,6 +214,11 @@ namespace BankingApp
             fromBalanceLabel.Content = cChequeBalance.ToString("C");  // Change the from Balance to the Savings Account balance
             fromBalance = cChequeBalance;
             fromRadioButtonChecked = "ChequeRadioButtonOn";  // this variable only stored a string
+        }
+
+        private void fromChequeRadioButton_Checked_1(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void fromInvestmentRadioButton_Click(object sender, RoutedEventArgs e)
